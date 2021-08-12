@@ -1,6 +1,14 @@
-# Ffth
+# FFTH
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.0.
+
+## To Setup
+```
+Run git clone https://github.com/alvinwatitwa/FFTH-Frontend.git
+
+Then run npm install
+```
+
 
 ## Development server
 
