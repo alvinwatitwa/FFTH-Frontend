@@ -1,0 +1,50 @@
+.head-color{
+  color: #F68B1F;
+}
+
+.u-text-center{
+  text-align: center;
+}
+.hd-background{
+  background-color: #F3F3F3;
+}
+
+.light-text{
+  font-weight: lighter;
+}
+
+.primary-content{
+  margin-top: 100px;
+}
+
+.btn-orange{
+  background-color: #F68B1F;
+  color: #fafafa;
+  font-weight: bold;
+  width: 100%;
+  border: none;
+}
+
+.btn-orange:hover{
+  background-color: black;
+  color: white;
+  transition-duration: 0.4s;
+  border: none;
+}
+
+.card-child{
+  margin-top: 25px;
+}
+
+.child__card-image {
+  width: 215px;
+  height: 300px;
+}
+
+@media (min-width: 768px)
+{
+  .sponsor-child__card-meta{
+    margin: 0 0 40px 0;
+  }
+
+}

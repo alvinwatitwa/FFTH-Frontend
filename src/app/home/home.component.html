@@ -1,0 +1,41 @@
+<app-header></app-header>
+<div class="row hd-background">
+  <main>
+  <section>
+  <div class="col-md-8 offset-md-2 u-text-center">
+    <h1 class="head-color">Sponsor a child</h1>
+    <h4 class="light-text">
+      Your gift of $38 each month will bring hope and change to a sponsored child's life and community. Through your sponsorship, you'll help Food for the Hungry assist your child's entire community to provide food, a better education, clean water and medical treatment to its children.
+    </h4>
+  </div>
+  </section>
+  <section>
+    <div class="primary-content col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
+      <div *ngFor="let child of children" class="card row card-child">
+        <div class="row card-body">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <img class="child__card-image" src="{{ imagePublicUrl }}/{{child.photo }}" alt="{{ child.first_name }}" >
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+              <h2 class="sponsor-child__card-meta">
+                <span class="">MEET</span>
+                <br>
+                <span class="head-color">
+                  {{ child.first_name }}
+                  </span>
+                </h2>
+              <div class="row">
+                <h5 class="light-text">
+                  {{ child.first_name }} is {{ ageFromDateOfBirthday(child.date_of_birth ) }} , lives in {{ child.Country }} and {{ child.hobbies }}
+                </h5>
+              </div>
+          </div>
+        </div>
+        <div class="row card-footer">
+          <button class="brn btn-lg btn-orange"> I WILL SPONSOR {{ child.first_name }} for {{ child.support_amount }} $ {{ child.frequency }}</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+</div>

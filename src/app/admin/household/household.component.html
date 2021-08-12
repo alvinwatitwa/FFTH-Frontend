@@ -1,0 +1,145 @@
+<div class="row mb-2">
+  <button type="submit" data-toggle="modal" data-target="#addChildForm" class="float-right text-white btnSubmit btnaddChildForm bg-primary text-bold">Add Household</button>
+</div>
+
+<div class="row">
+  <table class="table table-striped table-bordered children-table" id="children-table">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Code</th>
+      <th scope="col">Name</th>
+      <th scope="col">Phone Number</th>
+      <th scope="col">Country</th>
+      <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let household of households.data; let i = index;">
+      <th scope="row">{{ i+ 1 }}</th>
+      <td>{{household.code}}</td>
+      <td>{{household.name}}</td>
+      <td>{{household.phone_number}}</td>
+      <td>{{household.country}}</td>
+      <td><button class="btn-link" data-toggle="modal" data-target="#exampleModalCenter" (click)="launchEditModal(household.id)"><i class="fa fa-edit mr-3 text-success"></i></button><button class="btn-link" data-toggle="modal" data-target="#deleteChildForm" (click)="launchEditModal(household.id)"><i class="fa fa-trash text-danger"></i></button></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Household Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="edit_success" class="alert alert-success">{{submit_message}}</div>
+        <form class="col-md-12" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+          <div class="row form-group mt-5">
+            <div class="col-md-6">
+              <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" placeholder="Name *" value="" />
+              <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div *ngIf="f.name.errors.required">Name is required</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone_number.errors }" placeholder="phone_number*" value="" />
+              <div *ngIf="submitted && f.phone_number.errors" class="invalid-feedback">
+                <div *ngIf="f.phone_number.errors.required">Phone number is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group mt-5">
+            <div class="col-md-12">
+              <input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country.errors }" placeholder="country*" value="" />
+              <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                <div *ngIf="f.country.errors.required">country is required</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row form-group mt-5">
+            <div class="col-md-12">
+              <button type="submit" class="btnSubmit">Submit</button>
+            </div>
+
+          </div>
+          <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addChildForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Household Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="added_success" class="alert alert-success">{{submit_message}}</div>
+        <form class="col-md-12" [formGroup]="editForm" (ngSubmit)="onSubmitAddHousehold()">
+          <div class="row form-group mt-5">
+            <div class="col-md-6">
+              <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" placeholder="Name *" value="" />
+              <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <div *ngIf="f.name.errors.required">Name is required</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <input type="text" formControlName="phone_number" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone_number.errors }" placeholder="phone_number*" value="" />
+              <div *ngIf="submitted && f.phone_number.errors" class="invalid-feedback">
+                <div *ngIf="f.phone_number.errors.required">Phone number is required</div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group mt-5">
+            <div class="col-md-12">
+              <input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.country.errors }" placeholder="country*" value="" />
+              <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                <div *ngIf="f.country.errors.required">Country is required</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row form-group mt-5">
+            <div class="col-md-12">
+              <button type="submit" class="btnSubmit">Submit</button>
+            </div>
+          </div>
+          <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="deleteChildForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete Household Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="deleted_success" class="row alert alert-success">{{submit_message}}</div>
+        <div class="row">
+          <p class="text-center">Are you sure you want to delete this household form the database?</p>
+          <button type="submit" (click)="deleteChild()" class="text-white btnSubmit bg-danger">Delete</button>
+          <button type="submit" class="btnSubmit bg-warning text-white" data-dismiss="modal" aria-label="Close">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

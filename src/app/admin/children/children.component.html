@@ -1,0 +1,263 @@
+<div class="row mb-2">
+  <button type="submit" data-toggle="modal" data-target="#addChildForm" class="float-right text-white btnSubmit btnaddChildForm bg-primary text-bold">Add A Child</button>
+</div>
+
+<div class="row">
+  <table class="table table-striped table-bordered children-table" id="children-table">
+    <thead>
+      <tr>
+        <th scope="col">Child ID</th>
+        <th scope="col">Full Name</th>
+        <th scope="col">Gender</th>
+        <th scope="col">DOB</th>
+        <th scope="col">Country</th>
+        <th scope="col">Fund Amount</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let child of children.data">
+        <th scope="row">{{child.id}}</th>
+        <td>{{child.first_name}} {{child.last_name}}</td>
+        <td>{{child.gender}}</td>
+        <td>{{child.date_of_birth}}</td>
+        <td>{{child.Country}}</td>
+        <td>{{child.support_amount}}</td>
+        <td><button class="btn-link" data-toggle="modal" data-target="#exampleModalCenter" (click)="launchEditModal(child.id)"><i class="fa fa-edit mr-3 text-success"></i></button><button class="btn-link" data-toggle="modal" data-target="#deleteChildForm" (click)="launchEditModal(child.id)"><i class="fa fa-trash text-danger"></i></button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Child Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="edit_success" class="alert alert-success">{{submit_message}}</div>
+        <form class="col-md-12" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+          <div class="row form-group mt-5">
+              <div class="col-md-6">
+                  <input type="text" formControlName="firstname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }" placeholder="First Name *" value="" />
+                  <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
+                      <div *ngIf="f.firstname.errors.required">Firstname is required</div>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <input type="text" formControlName="lastname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" placeholder="Last Name *" value="" />
+                  <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
+                      <div *ngIf="f.lastname.errors.required">Lastname is required</div>
+                  </div>
+              </div>
+          </div>
+          <div class="row form-group mt-5">
+              <div class="col-md-6">
+                  <select formControlName="gender" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.gender.errors }">
+                    <option value="Boy">Boy</option>
+                    <option value="Girl">Girl</option>
+                  </select>
+                  <div *ngIf="submitted && f.gender.errors" class="invalid-feedback">
+                      <div *ngIf="f.gender.errors.required">Gender is required</div>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <input type="date" formControlName="date_of_birth" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.date_of_birth.errors }" placeholder="Date Of Birth*" value="" />
+                  <div *ngIf="submitted && f.date_of_birth.errors" class="invalid-feedback">
+                      <div *ngIf="f.date_of_birth.errors.required">Date Of Birth is required</div>
+                  </div>
+              </div>
+          </div>
+          <div class="row form-group mt-5">
+              <div class="col-md-12">
+                  <input type="text" formControlName="Country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Country.errors }" placeholder="Country*" value="" />
+                  <div *ngIf="submitted && f.Country.errors" class="invalid-feedback">
+                      <div *ngIf="f.Country.errors.required">Country is required</div>
+                  </div>
+              </div>
+          </div>
+          <div class="row form-group mt-5">
+              <div class="col-md-6">
+                  <input type="text" formControlName="support_amount" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.support_amount.errors }" placeholder="Support Amount*" value="" />
+                  <div *ngIf="submitted && f.support_amount.errors" class="invalid-feedback">
+                      <div *ngIf="f.support_amount.errors.required">Support Amount is required</div>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <select formControlName="frequency" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.frequency.errors }">
+                    <option value="Monthly">Montly</option>
+                    <option value="One Time">One Time</option>
+                  </select>
+                  <div *ngIf="submitted && f.frequency.errors" class="invalid-feedback">
+                      <div *ngIf="f.frequency.errors.required">Frequency is required</div>
+                  </div>
+              </div>
+          </div>
+          <div class="row form-group mt-5">
+              <div class="col-md-12">
+                  <textarea cols="10" formControlName="hobbies" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.hobbies.errors }" placeholder="hobbies*" value="">
+                  </textarea>
+                  <div *ngIf="submitted && f.hobbies.errors" class="invalid-feedback">
+                      <div *ngIf="f.hobbies.errors.required">Hobbies is required</div>
+                  </div>
+              </div>
+          </div>
+          <div class="row form-group mt-5">
+              <div class="col-md-12">
+                  <textarea cols="10" formControlName="history" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.history.errors }" placeholder="history*" value="">
+                  </textarea>
+                  <div *ngIf="submitted && f.history.errors" class="invalid-feedback">
+                      <div *ngIf="f.history.errors.required">History is required</div>
+                  </div>
+              </div>
+          </div>
+          <div class="row form-group mt-5">
+              <div class="col-md-12">
+                <button type="submit" class="btnSubmit">Submit</button>
+              </div>
+
+          </div>
+          <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addChildForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Child Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf="added_success" class="alert alert-success">{{submit_message}}</div>
+          <form class="col-md-12" [formGroup]="editForm" (ngSubmit)="onSubmitAddChild()">
+            <div class="row form-group mt-5">
+                <div class="col-md-6">
+                    <input type="text" formControlName="firstname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }" placeholder="First Name *" value="" />
+                    <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
+                        <div *ngIf="f.firstname.errors.required">Firstname is required</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" formControlName="lastname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }" placeholder="Last Name *" value="" />
+                    <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
+                        <div *ngIf="f.lastname.errors.required">Lastname is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group mt-5">
+              <div class="col-md-6">
+                <select formControlName="household_id" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.household_id.errors }"  placeholder="Household *">
+                  <option *ngFor="let household of households" value="{{ household.id }}">{{ household.name }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="row form-group mt-5">
+                <div class="col-md-6">
+                    <select formControlName="gender" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.gender.errors }">
+                      <option value="Boy">Boy</option>
+                      <option value="Girl">Girl</option>
+                    </select>
+                    <div *ngIf="submitted && f.gender.errors" class="invalid-feedback">
+                        <div *ngIf="f.gender.errors.required">Gender is required</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <input type="date" formControlName="date_of_birth" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.date_of_birth.errors }" placeholder="Date Of Birth*" value="" />
+                    <div *ngIf="submitted && f.date_of_birth.errors" class="invalid-feedback">
+                        <div *ngIf="f.date_of_birth.errors.required">Date Of Birth is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group mt-5">
+                <div class="col-md-6">
+                    <input type="text" formControlName="Country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.Country.errors }" placeholder="Country*" value="" />
+                    <div *ngIf="submitted && f.Country.errors" class="invalid-feedback">
+                        <div *ngIf="f.Country.errors.required">Country is required</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <input type="file" (change)="uploadFile($event)" formControlName="photo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.photo.errors }" placeholder="Photo*" value="" />
+                    <div *ngIf="submitted && f.photo.errors" class="invalid-feedback">
+                        <div *ngIf="f.photo.errors.required">Photo is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group mt-5">
+                <div class="col-md-6">
+                    <input type="text" formControlName="support_amount" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.support_amount.errors }" placeholder="Support Amount*" value="" />
+                    <div *ngIf="submitted && f.support_amount.errors" class="invalid-feedback">
+                        <div *ngIf="f.support_amount.errors.required">Support Amount is required</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <select formControlName="frequency" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.frequency.errors }">
+                      <option value="Monthly">Montly</option>
+                      <option value="One Time">One Time</option>
+                    </select>
+                    <div *ngIf="submitted && f.frequency.errors" class="invalid-feedback">
+                        <div *ngIf="f.frequency.errors.required">Frequency is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group mt-5">
+                <div class="col-md-12">
+                    <textarea cols="10" formControlName="hobbies" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.hobbies.errors }" placeholder="hobbies*" value="">
+                    </textarea>
+                    <div *ngIf="submitted && f.hobbies.errors" class="invalid-feedback">
+                        <div *ngIf="f.hobbies.errors.required">Hobbies is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group mt-5">
+                <div class="col-md-12">
+                    <textarea cols="10" formControlName="history" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.history.errors }" placeholder="history*" value="">
+                    </textarea>
+                    <div *ngIf="submitted && f.history.errors" class="invalid-feedback">
+                        <div *ngIf="f.history.errors.required">History is required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group mt-5">
+                <div class="col-md-12">
+                  <button type="submit" class="btnSubmit">Submit</button>
+                </div>
+
+            </div>
+            <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="modal fade" id="deleteChildForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h5 class="modal-title" id="exampleModalLongTitle">Delete Child Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div *ngIf="deleted_success" class="row alert alert-success">{{submit_message}}</div>
+          <div class="row">
+              <p class="text-center">Are you sure you want to delete this child form the database?</p>
+              <button type="submit" (click)="deleteChild()" class="text-white btnSubmit bg-danger">Delete</button>
+              <button type="submit" class="btnSubmit bg-warning text-white" data-dismiss="modal" aria-label="Close">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
