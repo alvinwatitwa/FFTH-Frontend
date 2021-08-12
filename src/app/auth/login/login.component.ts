@@ -67,8 +67,8 @@ onSubmit() {
               this.router.navigateByUrl(this.returnUrl, navigationExtras);
             },
             error => {
-                this.error = error;
-                this.loading = false;
+              this.error = error.error.message;
+              this.loading = false;
             });
 }
 
