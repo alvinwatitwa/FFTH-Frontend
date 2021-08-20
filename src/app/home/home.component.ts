@@ -11,7 +11,7 @@ import {environment} from "@environments/environment";
 export class HomeComponent implements OnInit {
 
   children: Array<Children> = [];
-  imagePublicUrl = `${environment.imageUrl}${'storage'}`;
+  imagePublicUrl = `${environment.imageUrl}`;
 
   constructor(private homeService: HomeService) { }
 
