@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular
 import { first } from 'rxjs/operators';
 import {HouseholdService} from '../household/household.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-children',
   templateUrl: './children.component.html',
@@ -39,14 +41,10 @@ export class ChildrenComponent implements OnInit {
   }
 
   ngOnInit() {
-    // get all chilren
-    this.childrenService.getChildren(this.token)
-      .subscribe((data: any) => {
-        console.log(data);
-        this.children = data;
-    });
+    // get all children
+   this.getAllChildren();
     // handle edit form
-    this.editForm = this.formBuilder.group({
+   this.editForm = this.formBuilder.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       Country: ['', Validators.required],
@@ -163,6 +161,8 @@ export class ChildrenComponent implements OnInit {
               if ( data.message === 'Child Added successfully.') {
                 this.added_success = true;
                 this.submit_message = 'Child Added successfully.';
+                this.getAllChildren();
+                $('#addChildForm').click();
               }
             },
             error => {
@@ -205,6 +205,13 @@ export class ChildrenComponent implements OnInit {
       .subscribe((data: any) => {
         console.log(data);
         this.households = data.data;
+      });
+  }
+  getAllChildren(){
+    this.childrenService.getChildren(this.token)
+      .subscribe((data: any) => {
+        console.log(data);
+        this.children = data;
       });
   }
 }
