@@ -19,7 +19,7 @@ export class ChildrenService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`
       })
     };
     return this.http.get(`${this.uri}`, httpOptions);
@@ -31,14 +31,14 @@ export class ChildrenService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'accept':  'application/json',
-        'Authorization': `Bearer ${token}`
+        accept:  'application/json',
+        Authorization: `Bearer ${token}`
       }),
       params,
       reportProgress: true,
     };
 
-      return this.http.post<any>(`${this.uri}`, formFields , httpOptions)
+    return this.http.post<any>(`${this.uri}`, formFields , httpOptions)
           .pipe(
             map(data => {
               return data;
@@ -52,14 +52,14 @@ export class ChildrenService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'accept':  'application/json',
-        'Authorization': `Bearer ${token}`
+        accept:  'application/json',
+        Authorization: `Bearer ${token}`
       }),
       params,
       reportProgress: true,
     };
 
-      return this.http.put<any>(`${this.uri}/${childID}` ,formFields , httpOptions)
+    return this.http.put<any>(`${this.uri}/${childID}` , formFields , httpOptions)
           .pipe(
             map(data => {
               return data;
@@ -73,14 +73,14 @@ export class ChildrenService {
 
     const httpOptions = {
       headers: new HttpHeaders({
-        'Accept':  'application/json',
-        'Authorization': `Bearer ${token}`
+        Accept:  'application/json',
+        Authorization: `Bearer ${token}`
       }),
       params,
       reportProgress: true,
     };
 
-      return this.http.delete<any>(`${this.uri}/${childID}` , httpOptions)
+    return this.http.delete<any>(`${this.uri}/${childID}` , httpOptions)
           .pipe(
             map(data => {
               return data;

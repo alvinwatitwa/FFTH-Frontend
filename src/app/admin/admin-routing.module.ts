@@ -5,7 +5,6 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ChildrenComponent } from './children/children.component';
 import { SponsorshipComponent } from './sponsorship/sponsorship.component';
-import { CrisisComponent } from './crisis/crisis.component';
 
 import { AuthGuard } from '../auth/auth.guard';
 import {HouseholdComponent} from './household/household.component';
@@ -22,7 +21,6 @@ const adminRoutes: Routes = [
         children: [
           { path: 'households', component: HouseholdComponent },
           { path: 'children', component: ChildrenComponent },
-          { path: 'crisis', component: CrisisComponent },
           { path: 'sponsorship', component: SponsorshipComponent },
           { path: '', component: AdminDashboardComponent }
         ]

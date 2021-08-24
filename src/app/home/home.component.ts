@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {HomeService} from './home.service';
 import Children from '../admin/children/Children';
-import {environment} from "@environments/environment";
+import {environment} from '@environments/environment';
+
+declare var $: any;
 
 @Component({
   selector: 'app-home',
@@ -37,6 +39,10 @@ export class HomeComponent implements OnInit {
     }
 
     return age;
+  }
+  showModal() {
+    console.log('clicked');
+    $('#childModal').show();
   }
 
 }

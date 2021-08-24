@@ -6,3 +6,8 @@
   width: auto;
   padding: 10px 30px;
 }
+
+.child__card-image {
+  width: 107px;
+  height: 150px;
+}

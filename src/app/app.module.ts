@@ -15,6 +15,7 @@ import { APIInterceptor } from './auth_interceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './partials/header/header.component';
+import { ViewChildModalComponent } from './home/view-child-modal/view-child-modal.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { HeaderComponent } from './partials/header/header.component';
     PageNotFoundComponent,
     HomeComponent,
     HeaderComponent,
+    ViewChildModalComponent,
   ],
   bootstrap: [ AppComponent ]
 })

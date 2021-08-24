@@ -32,7 +32,40 @@
           </div>
         </div>
         <div class="row card-footer">
-          <button class="brn btn-lg btn-orange"> I WILL SPONSOR {{ child.first_name }} for {{ child.support_amount }} $ {{ child.frequency }}</button>
+          <button class="brn btn-lg btn-orange" data-toggle="modal" data-target="#childModal"> I WILL SPONSOR {{ child.first_name }} for {{ child.support_amount }} $ {{ child.frequency }}</button>
+        </div>
+        <div class="modal fade" id="childModal" tabindex="-1" role="dialog" aria-labelledby="childModal" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Child Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row child-modal-bg">
+                  <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                    <img class="child__card-image" src="{{ imagePublicUrl }}/{{child.photo }}" alt="{{ child.first_name }}" >
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                    <h4>{{ child.first_name }} {{child.last_name}}</h4>
+                    <h6>ID: {{child.id }}</h6>
+                    <p class="light-text">{{ child.first_name }} is {{ ageFromDateOfBirthday(child.date_of_birth ) }} , lives in {{ child.Country }} and {{ child.hobbies }}</p>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-xs-12 col-sm-12">
+                    <span class="item-label">Amount</span> <br>
+                    <span class="item-value"> ${{ child.support_amount}}</span>
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-xs-12 col-sm-12">
+                    <span class="item-label">Frequency</span>
+                    <br>
+                    <span class="item-value"> {{ child.frequency }} </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

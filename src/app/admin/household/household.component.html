@@ -15,13 +15,63 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let household of households.data; let i = index;">
+    <tr *ngFor="let household of households.data; let i = index" [attr.data-index]="i">
       <th scope="row">{{ i+ 1 }}</th>
       <td>{{household.code}}</td>
       <td>{{household.name}}</td>
       <td>{{household.phone_number}}</td>
       <td>{{household.country}}</td>
-      <td><button class="btn-link" data-toggle="modal" data-target="#exampleModalCenter" (click)="launchEditModal(household.id)"><i class="fa fa-edit mr-3 text-success"></i></button><button class="btn-link" data-toggle="modal" data-target="#deleteChildForm" (click)="launchEditModal(household.id)"><i class="fa fa-trash text-danger"></i></button></td>
+      <td>
+        <button class="btn-link" data-toggle="modal" data-target="#exampleModalCenter" (click)="launchEditModal(household.id)"><i class="fa fa-edit mr-3 text-success"></i></button>
+        <button class="btn-link" data-toggle="modal" [attr.data-target]="'#MyModal'+household.id"><i class="fa fa-users mr-3 text-success"></i></button>
+        <button class="btn-link" data-toggle="modal" data-target="#deleteChildForm" (click)="launchDeleteModal(household.id)"><i class="fa fa-trash text-danger"></i></button>
+      </td>
+
+      <div class="modal fade" [attr.id]="'MyModal'+household.id" tabindex="-1" role="dialog" aria-labelledby="membersModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Household Members</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+                <div class="row mb-2">
+                  <button type="submit" data-toggle="modal" data-target="#createMember" (click)="launchMembersAddModal(household.id)"
+                          class="float-right text-white btnSubmit btnaddChildForm bg-primary btn-sm text-bold">Add Member
+                  </button>
+                </div>
+                <div class="row">
+                  <table class="table table-striped table-bordered members-table" id="members-table">
+                    <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">First Name</th>
+                      <th scope="col">Last Name</th>
+                      <th scope="col">Phone Number</th>
+                      <th scope="col">Gender</th>
+                      <th scope="col">Household Head</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let member of household.members; let i = index;">
+                      <th scope="row">{{ i+ 1 }}</th>
+                      <td>{{member.first_name}}</td>
+                      <td>{{member.last_name}}</td>
+                      <td>{{member.phone}}</td>
+                      <td>{{member.gender }}</td>
+                      <td>{{member.household_head ? 'Yes' : 'No' }}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      </div>
     </tr>
     </tbody>
   </table>
@@ -31,7 +81,7 @@
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Household Details</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Edit Household Details</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -47,7 +97,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <input type="text" formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone_number.errors }" placeholder="phone_number*" value="" />
+              <input type="text" formControlName="phone_number" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone_number.errors }" placeholder="phone_number*" value="" />
               <div *ngIf="submitted && f.phone_number.errors" class="invalid-feedback">
                 <div *ngIf="f.phone_number.errors.required">Phone number is required</div>
               </div>
@@ -136,9 +186,82 @@
         <div *ngIf="deleted_success" class="row alert alert-success">{{submit_message}}</div>
         <div class="row">
           <p class="text-center">Are you sure you want to delete this household form the database?</p>
-          <button type="submit" (click)="deleteChild()" class="text-white btnSubmit bg-danger">Delete</button>
+          <button type="submit" (click)="deleteHousehold()" class="text-white btnSubmit bg-danger">Delete</button>
           <button type="submit" class="btnSubmit bg-warning text-white" data-dismiss="modal" aria-label="Close">Cancel</button>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="createMember" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="LongTitle">Create Member</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div *ngIf="added_success" class="alert alert-success">{{submit_message}}</div>
+        <form class="col-md-12" [formGroup]="newMemberForm" (ngSubmit)="createMember()">
+      <div class="row form-group mt-5">
+        <div class="col-md-6">
+          <label for="first_name">First Name</label>
+          <input type="text" formControlName="first_name" class="form-control" [ngClass]="{ 'is-invalid': submitted && newF.first_name.errors }" placeholder="First Name *" value="" />
+          <div *ngIf="submitted && newF.first_name.errors" class="invalid-feedback">
+            <div *ngIf="newF.first_name.errors.required">Firstname is required</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="last_name">Last Name</label>
+          <input type="text" formControlName="last_name" class="form-control" [ngClass]="{ 'is-invalid': submitted && newF.last_name.errors }" placeholder="Last Name *" value="" />
+          <div *ngIf="submitted && newF.last_name.errors" class="invalid-feedback">
+            <div *ngIf="newF.last_name.errors.required">Lastname is required</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-group mt-5">
+        <div class="col-md-6">
+          <label for="gender"> Gender</label>
+          <select formControlName="gender" class="form-control" [ngClass]="{ 'is-invalid': submitted && newF.gender.errors }">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <div *ngIf="submitted && newF.gender.errors" class="invalid-feedback">
+            <div *ngIf="newF.gender.errors.required">Gender is required</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="phone"> Phone number</label>
+          <input type="text" formControlName="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && newF.phone.errors }" placeholder="Phone Number*" value="" />
+          <div *ngIf="submitted && newF.phone.errors" class="invalid-feedback">
+            <div *ngIf="newF.phone.errors.required">Phone number is required</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-group mt-5">
+        <div class="col-md-6">
+          <label for="household_head"> Household Head</label>
+          <select formControlName="household_head" class="form-control" [ngClass]="{ 'is-invalid': submitted && newF.gender.errors }" placeholder="Household Head *">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+          <div *ngIf="submitted && newF.household_head.errors" class="invalid-feedback">
+            <div *ngIf="newF.household_head.errors.required">household head is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group mt-5">
+        <div class="col-md-12">
+          <button type="submit" class="btnSubmit">Submit</button>
+        </div>
+      </div>
+      <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+    </form>
       </div>
     </div>
   </div>
