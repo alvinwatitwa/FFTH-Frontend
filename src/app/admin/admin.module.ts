@@ -10,9 +10,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminRoutingModule } from './admin-routing.module';
 import { ChildrenComponent } from './children/children.component';
 import { SponsorshipComponent } from './sponsorship/sponsorship.component';
-import { CrisisComponent } from './crisis/crisis.component';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HouseholdComponent } from './household/household.component';
+import { MembersComponent } from './members/members.component';
 
 @NgModule({
   imports: [
@@ -27,8 +27,8 @@ import { HouseholdComponent } from './household/household.component';
     AdminDashboardComponent,
     ChildrenComponent,
     SponsorshipComponent,
-    CrisisComponent,
     HouseholdComponent,
+    MembersComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: APIInterceptor, multi: true },

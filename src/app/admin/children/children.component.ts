@@ -5,6 +5,7 @@ import Children from './Children';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
 import { first } from 'rxjs/operators';
 import {HouseholdService} from '../household/household.service';
+import {environment} from '@environments/environment';
 
 declare var $: any;
 
@@ -29,6 +30,8 @@ export class ChildrenComponent implements OnInit {
 
   filePhoto: any;
   childID: any;
+  currentChildPhoto: any;
+  imagePublicUrl = `${environment.imageUrl}`;
 
   constructor(private formBuilder: FormBuilder,
               public authService: AuthService,
@@ -50,7 +53,7 @@ export class ChildrenComponent implements OnInit {
       Country: ['', Validators.required],
       gender: ['', Validators.required],
       date_of_birth: ['', Validators.required],
-      photo: [null],
+      photo: ['', []],
       hobbies: ['', Validators.required],
       history: ['', Validators.required],
       support_amount: ['', Validators.required],
@@ -59,7 +62,7 @@ export class ChildrenComponent implements OnInit {
     });
 
     // fetch households
-    this.getHouseholds();
+   this.getHouseholds();
   }
 
   // convenience getter for easy access to form fields
@@ -79,6 +82,7 @@ export class ChildrenComponent implements OnInit {
       if ( element.id === id ) {
 
         this.childID = id;
+        this.currentChildPhoto = element.photo;
 
         this.f.firstname.setValue(element.first_name);
         this.f.lastname.setValue(element.last_name);
@@ -104,26 +108,30 @@ export class ChildrenComponent implements OnInit {
     if (this.editForm.invalid) {
       return;
     }
-
     const first_name = this.f.firstname.value;
     const last_name = this.f.lastname.value;
     const Country = this.f.Country.value;
     const gender = this.f.gender.value;
     const date_of_birth = this.f.date_of_birth.value;
-    const photo = this.filePhoto;
+    const photo: any = this.filePhoto;
     const hobbies = this.f.hobbies.value;
     const history = this.f.history.value;
+    // tslint:disable-next-line:variable-name
     const support_amount = this.f.support_amount.value;
     const frequency = this.f.frequency.value;
+    const household_id = this.f.household_id.value;
 
-    this.childrenService.editChild(this.token, this.childID, {first_name, last_name, Country, gender, date_of_birth, hobbies, history, support_amount, frequency})
+    // tslint:disable-next-line:max-line-length
+    this.childrenService.editChild(this.token, this.childID, {first_name, last_name, Country, gender, photo, household_id, date_of_birth, hobbies, history, support_amount, frequency})
         .pipe(first())
         .subscribe(
             data => {
               console.log(data);
-              if ( data.message === 'Child Updated successfully.') {
+              if ( data.success === true) {
                 this.edit_success = true;
                 this.submit_message = 'Child Updated successfully.';
+                this.getAllChildren();
+                $('#exampleModalCenter').click();
               }
             },
             error => {
@@ -175,6 +183,8 @@ export class ChildrenComponent implements OnInit {
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
       this.filePhoto = file;
+      console.log('on uploadFile');
+      console.log(this.filePhoto);
     }
   }
 

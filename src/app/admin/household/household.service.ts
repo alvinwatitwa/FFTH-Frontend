@@ -10,6 +10,7 @@ import {map} from "rxjs/operators";
 })
 export class HouseholdService {
   uri = `${environment.apiUrl}${'households'}`;
+  urimembers = `${environment.apiUrl}${'household-members'}`;
 
   constructor(private http: HttpClient) {
   }
@@ -80,6 +81,27 @@ export class HouseholdService {
     };
 
     return this.http.delete<any>(`${this.uri}/${householdId}`, httpOptions)
+      .pipe(
+        map(data => {
+            return data;
+          }
+        ));
+  }
+
+  addHouseholdMember(token, formFields: any) {
+
+    const params = new HttpParams();
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        accept: 'application/json',
+        Authorization: `Bearer ${token}`
+      }),
+      params,
+      reportProgress: true,
+    };
+
+    return this.http.post<any>(`${this.urimembers}`, formFields, httpOptions)
       .pipe(
         map(data => {
             return data;

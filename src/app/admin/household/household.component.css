@@ -2,6 +2,10 @@
   border: 0px;
 }
 
+.members-table th{
+  font-weight: normal;
+}
+
 .btnaddChildForm{
   width: auto;
   padding: 10px 30px;

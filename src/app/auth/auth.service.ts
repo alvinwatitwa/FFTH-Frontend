@@ -14,6 +14,7 @@ import {
 import { User } from './user';
 import {environment} from '@environments/environment';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -57,4 +58,12 @@ export class AuthService {
       this.router.navigate(['/']);
   }
 
+  get() {
+    return  JSON.parse(localStorage.getItem('currentUser'));
+  }
+
+  isValid() {
+    const user = this.get();
+    return !!user.data.token;
+  }
 }
