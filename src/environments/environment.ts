@@ -4,8 +4,11 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://127.0.0.1:8000/api/v1/',
-  imageUrl: 'http://127.0.0.1:8000/',
+  // apiUrl: 'http://127.0.0.1:8000/api/v1/',
+  // imageUrl: 'http://127.0.0.1:8000/',
+
+  apiUrl: 'https://ffth-web-api.herokuapp.com/api/v1/',
+  imageUrl: 'https://ffth-web-api.herokuapp.com/',
 
 };
 
